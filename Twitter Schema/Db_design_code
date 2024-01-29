@@ -1,0 +1,36 @@
+
+twitter_user {
+	user_id varchar pk
+	name varchar
+	email_id varchar
+	phone_number integer
+}
+
+follower {
+	follow_id varchar pk
+	following_user_id varchar *>* twitter_user.user_id
+	followed_user_id varchar *>* twitter_user.user_id
+}
+
+tweet {
+	tweet_id varchar pk
+	user_id varchar *> twitter_user.user_id
+	textual_context text
+	timestamp timestamp
+	main_tweet_id varchar > tweet.tweet_id
+}
+
+like {
+	like_id varchar pk
+	tweet_id varchar *> tweet.tweet_id
+	user_id varchar *> twitter_user.user_id
+	timestamp timestamp
+}
+
+retweet {
+	retweet_id varchar pk
+	original_tweet_id varchar *> tweet.tweet_id
+	user_id varchar *> twitter_user.user_id
+	timestamp timestamp
+}
+
